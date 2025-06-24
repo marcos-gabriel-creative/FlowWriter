@@ -311,12 +311,12 @@
     <div class="startup-screen" id="startupScreen">
         <div class="startup-title">
             ╔═══════════════════════════════════════╗<br>
-            ║            F L O W   W R I T E R      ║<br>
+            ║           W R I T E   O R   D I E     ║<br>
             ╚═══════════════════════════════════════╝<br>
         </div>
         
         <div class="session-setup">
-            <div class="setup-title">[ FLOW STATE WRITING SESSION ]</div>
+            <div class="setup-title">[ PRESSURIZED WRITING SESSION ]</div>
             <div style="margin-bottom: 20px; font-size: 12px;">Select your focused writing duration:</div>
             
             <div class="time-options">
@@ -343,14 +343,14 @@
             <div class="header-left">
                 <span>Flow Writer</span>
                 <span>Document1</span>
-                <span class="session-info" id="sessionInfo">Flow Session: 5 min</span>
+                <span class="session-info" id="sessionInfo">Pressure Session: 5 min</span>
             </div>
             <div class="menu-hint">F1-Help F3-Save F7-Exit</div>
         </div>
         
         <!-- Top Timer Bar -->
         <div class="top-timer-container" id="topTimerContainer">
-            <span class="timer-label">Flow Timer:</span>
+            <span class="timer-label">Pressure Timer:</span>
             <div class="timer-bar" id="timerBar">
                 <div class="timer-fill" id="timerFill"></div>
             </div>
@@ -580,9 +580,9 @@
                 this.editorContainer.classList.add('completed');
                 
                 this.timerText.innerHTML = '<span class="completion-message">COMPLETE!</span>';
-                this.sessionTimer.innerHTML = '<span class="completion-message">SESSION FINISHED - EDIT FREELY</span>';
+                this.sessionTimer.innerHTML = '<span class="completion-message">SESSION SURVIVED - EDIT FREELY</span>';
                 
-                this.editor.placeholder = "Session complete! You can now edit, revise, and perfect your work without time pressure.";
+                this.editor.placeholder = "Session survived! You can now edit, revise, and perfect your work without time pressure.";
                 
                 // Flash the screen green briefly
                 document.body.style.backgroundColor = '#004400';
@@ -631,7 +631,7 @@
                 // F1 - Help
                 if (e.key === 'F1') {
                     e.preventDefault();
-                    alert('Flow Writer - Flow State Writing Tool\n\nFlow State Writing:\n- Keep typing or your text disappears in 10 seconds\n- Timer resets with each keystroke\n- Copy/paste disabled during flow session\n- After completing your session time, edit freely\n- Focus on continuous writing\n\nF3 - Save (simulated)\nF7 - Exit');
+                    alert('Write or Die - Pressurised Flow State Writing Tool\n\nFlow State Writing:\n- Keep typing or your text disappears in 10 seconds\n- Timer resets with each keystroke\n- Copy/paste disabled during flow session\n- After completing your session time, edit freely\n- Focus on continuous writing\n\nF3 - Save (simulated)\nF7 - Exit');
                 }
                 
                 // F3 - Save (simulated)
