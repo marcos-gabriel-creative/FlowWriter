@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Writer</title>
+    <title>WRITE OR DIE</title>
     <style>
-        @font-face {
-            font-family: 'VT323';
-            src: url('VT323-Regular.ttf') format('truetype');
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
         
         * {
             margin: 0;
@@ -17,11 +14,11 @@
         }
         
         body {
-            background-color: #0000AA;
-            color: white;
-            font-family: 'VT323', 'IBM Plex Mono', 'JetBrains Mono', 'Courier Prime', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.2;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
             height: 100vh;
             overflow: hidden;
         }
@@ -33,85 +30,112 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #0000AA;
-            color: white;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
         }
         
         .startup-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 40px;
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 60px;
             text-align: center;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .session-setup {
-            border: 2px solid #4444FF;
-            padding: 30px;
-            background-color: #000088;
+            border: 1px solid #2a2a2a;
+            padding: 40px 50px;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
             text-align: center;
-            min-width: 400px;
+            min-width: 480px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         
         .setup-title {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #FFFF00;
+            font-size: 14px;
+            margin-bottom: 30px;
+            color: #10b981;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
         
         .time-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 30px;
         }
         
         .time-option {
-            background-color: #0000AA;
-            border: 1px solid #4444FF;
-            color: white;
-            padding: 8px 16px;
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid #2a2a2a;
+            color: #e0e0e0;
+            padding: 16px 24px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 15px;
             text-align: left;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            font-weight: 400;
         }
         
         .time-option:hover {
-            background-color: #4444FF;
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            transform: translateX(4px);
         }
         
         .time-option.selected {
-            background-color: #FFFF00;
-            color: #0000AA;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border-color: #10b981;
+            font-weight: 500;
         }
         
         .start-button {
-            background-color: #00FF00;
-            color: #000000;
-            border: 2px solid #44FF44;
-            padding: 10px 30px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
             font-family: inherit;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             margin-top: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .start-button:hover {
-            background-color: #44FF44;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
         }
         
         .start-button:disabled {
-            background-color: #666666;
-            color: #AAAAAA;
+            background: #2a2a2a;
+            color: #666666;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         .instructions {
-            font-size: 12px;
-            color: #CCCCFF;
-            margin-top: 15px;
-            line-height: 1.4;
+            font-size: 13px;
+            color: #888888;
+            margin-top: 25px;
+            line-height: 1.8;
+            font-weight: 300;
         }
         
         /* Main Editor */
@@ -120,11 +144,12 @@
         }
         
         .header {
-            background-color: #0000AA;
-            color: white;
-            padding: 4px 8px;
-            font-size: 12px;
-            border-bottom: 1px solid #4444FF;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            color: #e0e0e0;
+            padding: 16px 32px;
+            font-size: 13px;
+            border-bottom: 1px solid #2a2a2a;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -132,90 +157,136 @@
         
         .header-left {
             display: flex;
-            gap: 20px;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .header-left > span:first-child {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 16px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .session-info {
-            color: #FFFF00;
-            font-size: 11px;
+            color: #10b981;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .restart-button {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #ffffff;
+            border: none;
+            padding: 8px 20px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .restart-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .restart-button.visible {
+            display: inline-block;
         }
         
         /* Top Timer Bar - Centered */
         .top-timer-container {
             position: fixed;
-            top: 40px;
+            top: 80px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 15px;
-            background-color: rgba(0, 0, 170, 0.9);
-            padding: 8px 20px;
-            border: 1px solid #4444FF;
-            border-radius: 4px;
+            gap: 20px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 32px;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
         
         .top-timer-container.completed {
-            background-color: rgba(0, 68, 0, 0.9);
-            border: 1px solid #00FF00;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
         }
         
         .timer-label {
             font-size: 12px;
-            color: #CCCCFF;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
         }
         
         .timer-bar {
-            width: 200px;
-            height: 16px;
-            background-color: #000044;
-            border: 1px solid #4444FF;
+            width: 240px;
+            height: 8px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #2a2a2a;
             position: relative;
+            border-radius: 4px;
+            overflow: hidden;
         }
         
         .timer-bar.completed {
-            background-color: #002200;
-            border: 1px solid #00FF00;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
         }
         
         .timer-fill {
             height: 100%;
-            background-color: #00FF00;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
             transition: width 0.1s linear;
             width: 100%;
+            border-radius: 3px;
         }
         
         .timer-fill.warning {
-            background-color: #FFFF00;
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
         }
         
         .timer-fill.danger {
-            background-color: #FF0000;
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
         }
         
         .timer-fill.completed {
-            background-color: #00FF00;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
             animation: celebration 2s ease-in-out;
         }
         
         @keyframes celebration {
-            0%, 100% { background-color: #00FF00; }
-            25% { background-color: #FFFF00; }
-            50% { background-color: #00FF00; }
-            75% { background-color: #FFFF00; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         
         .timer-text {
-            font-size: 12px;
-            font-weight: bold;
-            min-width: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 50px;
             text-align: center;
+            color: #e0e0e0;
         }
         
         .document-area {
             height: calc(100vh - 80px);
-            padding: 80px 40px 40px 40px; /* Added top padding for the timer */
+            padding: 120px 40px 40px 40px;
             overflow-y: auto;
             display: flex;
             justify-content: center;
@@ -223,34 +294,37 @@
         
         .editor-container {
             width: 100%;
-            max-width: 800px;
-            background-color: rgba(0, 0, 170, 0.3);
-            border: 1px solid #4444FF;
-            padding: 30px;
+            max-width: 900px;
+            background: rgba(20, 20, 20, 0.4);
+            border: 1px solid #2a2a2a;
+            padding: 50px 60px;
             position: relative;
+            border-radius: 12px;
         }
         
         .editor-container.completed {
-            border: 1px solid #00FF00;
-            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid #10b981;
+            background: rgba(16, 185, 129, 0.05);
         }
         
         .editor {
             background: transparent;
             border: none;
             outline: none;
-            color: white;
-            font-family: inherit;
-            font-size: inherit;
-            line-height: inherit;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            line-height: 1.8;
             width: 100%;
             height: 100%;
             resize: none;
-            caret-color: white;
+            caret-color: #10b981;
+            font-weight: 300;
         }
         
         .editor::placeholder {
-            color: #AAAAFF;
+            color: #4a4a4a;
+            font-weight: 300;
         }
         
         .editor.completed {
@@ -262,47 +336,65 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #000088;
-            color: white;
-            padding: 4px 8px;
-            font-size: 11px;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #2a2a2a;
+            padding: 12px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #4444FF;
+            font-size: 12px;
+            color: #888888;
         }
         
         .status-bar.completed {
-            background-color: #004400;
-            border-top: 1px solid #00FF00;
+            border-top: 1px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
         }
         
         .session-timer {
-            font-size: 11px;
-        }
-        
-        .completion-message {
-            color: #00FF00;
-            font-weight: bold;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.7; }
+            font-weight: 500;
+            color: #e0e0e0;
         }
         
         .word-count {
-            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        .completion-message {
+            color: #10b981;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .menu-hint {
             font-size: 11px;
-            color: #CCCCFF;
+            color: #666666;
+            font-weight: 400;
         }
         
         .hidden {
             display: none !important;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a3a;
         }
     </style>
 </head>
@@ -310,28 +402,27 @@
     <!-- Startup Screen -->
     <div class="startup-screen" id="startupScreen">
         <div class="startup-title">
-            ╔═══════════════════════════════════════╗<br>
-            ║           W R I T E   O R   D I E     ║<br>
-            ╚═══════════════════════════════════════╝<br>
+            WRITE OR DIE
         </div>
         
         <div class="session-setup">
-            <div class="setup-title">[ PRESSURIZED WRITING SESSION ]</div>
-            <div style="margin-bottom: 20px; font-size: 12px;">Select your focused writing duration:</div>
+            <div class="setup-title">Flow State Writing Session</div>
+            <div style="margin-bottom: 20px; font-size: 14px; color: #aaa;">Select your focused writing duration:</div>
             
             <div class="time-options">
-                <button class="time-option" data-minutes="5">[ 1 ]  5 minutes  - Quick Sprint</button>
-                <button class="time-option" data-minutes="10">[ 2 ] 10 minutes - Short Focus</button>
-                <button class="time-option" data-minutes="15">[ 3 ] 15 minutes - Medium Session</button>
-                <button class="time-option" data-minutes="30">[ 4 ] 30 minutes - Deep Work</button>
-                <button class="time-option" data-minutes="60">[ 5 ] 60 minutes - Marathon</button>
+                <button class="time-option" data-minutes="5">[ 1 ]  5 minutes  — Quick Sprint</button>
+                <button class="time-option" data-minutes="10">[ 2 ] 10 minutes — Short Focus</button>
+                <button class="time-option" data-minutes="15">[ 3 ] 15 minutes — Medium Session</button>
+                <button class="time-option" data-minutes="30">[ 4 ] 30 minutes — Deep Work</button>
+                <button class="time-option" data-minutes="60">[ 5 ] 60 minutes — Marathon</button>
             </div>
             
-            <button class="start-button" id="startButton" disabled>[ ENTER ] START WRITING SESSION</button>
+            <button class="start-button" id="startButton" disabled>Start Writing Session</button>
             
             <div class="instructions">
                 During your session, you must keep typing continuously.<br>
                 If you stop for 10 seconds, all text will be deleted.<br>
+                Copy, paste, and text selection are disabled during the session.<br>
                 After completing your full session time, you can edit freely.
             </div>
         </div>
@@ -341,16 +432,17 @@
     <div class="main-app" id="mainApp">
         <div class="header">
             <div class="header-left">
-                <span>Flow Writer</span>
+                <span>WRITE OR DIE</span>
                 <span>Document1</span>
-                <span class="session-info" id="sessionInfo">Pressure Session: 5 min</span>
+                <span class="session-info" id="sessionInfo">Flow Session: 5 min</span>
+                <button class="restart-button" id="restartButton">↻ RESTART SESSION</button>
             </div>
-            <div class="menu-hint">F1-Help F3-Save F7-Exit</div>
+            <div class="menu-hint">F1—Help F3—Save F7—Exit</div>
         </div>
         
-        <!-- Top Timer Bar -->
+        <!-- Top Timer (Centered) -->
         <div class="top-timer-container" id="topTimerContainer">
-            <span class="timer-label">Pressure Timer:</span>
+            <span class="timer-label">FLOW STATE</span>
             <div class="timer-bar" id="timerBar">
                 <div class="timer-fill" id="timerFill"></div>
             </div>
@@ -361,8 +453,8 @@
             <div class="editor-container" id="editorContainer">
                 <textarea 
                     class="editor" 
-                    id="editor"
-                    placeholder="Begin typing... Your text will be deleted if you stop typing for 10 seconds."
+                    id="editor" 
+                    placeholder="Keep typing to maintain flow state. Stop for 10 seconds and your text disappears..."
                     spellcheck="false"
                 ></textarea>
             </div>
@@ -393,6 +485,11 @@
                 this.sessionTimer = document.getElementById('sessionTimer');
                 this.statusBar = document.getElementById('statusBar');
                 this.editorContainer = document.getElementById('editorContainer');
+                
+                // Add restart button event listener
+                document.getElementById('restartButton').addEventListener('click', () => {
+                    this.restartSession();
+                });
                 
                 this.timeLimit = 10000; // 10 seconds in milliseconds
                 this.timeRemaining = this.timeLimit;
@@ -580,15 +677,49 @@
                 this.editorContainer.classList.add('completed');
                 
                 this.timerText.innerHTML = '<span class="completion-message">COMPLETE!</span>';
-                this.sessionTimer.innerHTML = '<span class="completion-message">SESSION SURVIVED - EDIT FREELY</span>';
+                this.sessionTimer.innerHTML = '<span class="completion-message">SESSION FINISHED — EDIT FREELY</span>';
                 
-                this.editor.placeholder = "Session survived! You can now edit, revise, and perfect your work without time pressure.";
+                this.editor.placeholder = "Session complete! You can now edit, revise, and perfect your work without time pressure.";
+                
+                // Show restart button
+                document.getElementById('restartButton').classList.add('visible');
                 
                 // Flash the screen green briefly
-                document.body.style.backgroundColor = '#004400';
+                document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #065f46 100%)';
                 setTimeout(() => {
-                    document.body.style.backgroundColor = '#0000AA';
+                    document.body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
                 }, 500);
+            }
+            
+            restartSession() {
+                // Hide restart button
+                document.getElementById('restartButton').classList.remove('visible');
+                
+                // Reset session state
+                this.sessionCompleted = false;
+                
+                // Remove completion styles
+                this.statusBar.classList.remove('completed');
+                this.timerBar.classList.remove('completed');
+                this.timerFill.classList.remove('completed');
+                this.topTimerContainer.classList.remove('completed');
+                this.editorContainer.classList.remove('completed');
+                
+                // Reset timers using the same duration
+                this.sessionTimeLimit = this.selectedDuration * 60 * 1000;
+                this.sessionTimeRemaining = this.sessionTimeLimit;
+                this.timeRemaining = this.timeLimit;
+                
+                // Reset placeholder
+                this.editor.placeholder = "Keep typing to maintain flow state. Stop for 10 seconds and your text disappears...";
+                
+                // Restart timers
+                this.startFlowTimer();
+                this.startSessionTimer();
+                this.updateDisplay();
+                
+                // Focus the editor
+                this.editor.focus();
             }
             
             deleteContent() {
@@ -596,7 +727,7 @@
                 this.updateWordCount();
                 
                 // Flash effect
-                this.editor.style.backgroundColor = '#440000';
+                this.editor.style.backgroundColor = 'rgba(127, 29, 29, 0.3)';
                 setTimeout(() => {
                     this.editor.style.backgroundColor = 'transparent';
                 }, 200);
@@ -625,13 +756,13 @@
             }
         });
         
-                        // Handle keyboard shortcuts
+        // Handle keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('mainApp').style.display === 'block') {
                 // F1 - Help
                 if (e.key === 'F1') {
                     e.preventDefault();
-                    alert('Write or Die - Pressurised Flow State Writing Tool\n\nFlow State Writing:\n- Keep typing or your text disappears in 10 seconds\n- Timer resets with each keystroke\n- Copy/paste disabled during flow session\n- After completing your session time, edit freely\n- Focus on continuous writing\n\nF3 - Save (simulated)\nF7 - Exit');
+                    alert('WRITE OR DIE — Flow State Writing Tool\n\nFlow State Writing:\n• Keep typing or your text disappears in 10 seconds\n• Timer resets with each keystroke\n• Copy/paste disabled during flow session\n• After completing your session time, edit freely\n• Focus on continuous writing\n\nF3 — Save\nF7 — Exit');
                 }
                 
                 // F3 - Save (simulated)
@@ -652,7 +783,7 @@
                 // F7 - Exit
                 if (e.key === 'F7') {
                     e.preventDefault();
-                    if (confirm('Exit Flow Writer?')) {
+                    if (confirm('Exit WRITE OR DIE?')) {
                         window.close();
                     }
                 }
