@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Writer</title>
+    <title>WRITE OR DIE</title>
     <style>
         @font-face {
             font-family: 'VT323';
@@ -133,11 +133,32 @@
         .header-left {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
         
         .session-info {
             color: #FFFF00;
             font-size: 11px;
+        }
+        
+        .restart-button {
+            background-color: #FFFF00;
+            color: #0000AA;
+            border: 1px solid #FFFF00;
+            padding: 4px 12px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .restart-button:hover {
+            background-color: #FFFF44;
+        }
+        
+        .restart-button.visible {
+            display: inline-block;
         }
         
         /* Top Timer Bar - Centered */
@@ -311,7 +332,7 @@
     <div class="startup-screen" id="startupScreen">
         <div class="startup-title">
             ╔═══════════════════════════════════════╗<br>
-            ║            F L O W   W R I T E R      ║<br>
+            ║        W R I T E   O R   D I E        ║<br>
             ╚═══════════════════════════════════════╝<br>
         </div>
         
@@ -342,9 +363,10 @@
     <div class="main-app" id="mainApp">
         <div class="header">
             <div class="header-left">
-                <span>Flow Writer</span>
+                <span>WRITE OR DIE</span>
                 <span>Document1</span>
                 <span class="session-info" id="sessionInfo">Flow Session: 5 min</span>
+                <button class="restart-button" id="restartButton">↻ RESTART SESSION</button>
             </div>
             <div class="menu-hint">F1-Help F3-Save F7-Exit</div>
         </div>
@@ -394,6 +416,11 @@
                 this.sessionTimer = document.getElementById('sessionTimer');
                 this.statusBar = document.getElementById('statusBar');
                 this.editorContainer = document.getElementById('editorContainer');
+                
+                // Add restart button event listener
+                document.getElementById('restartButton').addEventListener('click', () => {
+                    this.restartSession();
+                });
                 
                 this.timeLimit = 10000; // 10 seconds in milliseconds
                 this.timeRemaining = this.timeLimit;
@@ -585,11 +612,45 @@
                 
                 this.editor.placeholder = "Session complete! You can now edit, revise, and perfect your work without time pressure.";
                 
+                // Show restart button
+                document.getElementById('restartButton').classList.add('visible');
+                
                 // Flash the screen green briefly
                 document.body.style.backgroundColor = '#004400';
                 setTimeout(() => {
                     document.body.style.backgroundColor = '#0000AA';
                 }, 500);
+            }
+            
+            restartSession() {
+                // Hide restart button
+                document.getElementById('restartButton').classList.remove('visible');
+                
+                // Reset session state
+                this.sessionCompleted = false;
+                
+                // Remove completion styles
+                this.statusBar.classList.remove('completed');
+                this.timerBar.classList.remove('completed');
+                this.timerFill.classList.remove('completed');
+                this.topTimerContainer.classList.remove('completed');
+                this.editorContainer.classList.remove('completed');
+                
+                // Reset timers using the same duration
+                this.sessionTimeLimit = this.selectedDuration * 60 * 1000;
+                this.sessionTimeRemaining = this.sessionTimeLimit;
+                this.timeRemaining = this.timeLimit;
+                
+                // Reset placeholder
+                this.editor.placeholder = "Keep typing to maintain flow state. Stop for 10 seconds and your text disappears...";
+                
+                // Restart timers
+                this.startFlowTimer();
+                this.startSessionTimer();
+                this.updateDisplay();
+                
+                // Focus the editor
+                this.editor.focus();
             }
             
             deleteContent() {
@@ -632,7 +693,7 @@
                 // F1 - Help
                 if (e.key === 'F1') {
                     e.preventDefault();
-                    alert('Flow Writer - Flow State Writing Tool\n\nFlow State Writing:\n- Keep typing or your text disappears in 10 seconds\n- Timer resets with each keystroke\n- Copy/paste disabled during flow session\n- After completing your session time, edit freely\n- Focus on continuous writing\n\nF3 - Save (simulated)\nF7 - Exit');
+                    alert('WRITE OR DIE - Flow State Writing Tool\n\nFlow State Writing:\n- Keep typing or your text disappears in 10 seconds\n- Timer resets with each keystroke\n- Copy/paste disabled during flow session\n- After completing your session time, edit freely\n- Focus on continuous writing\n\nF3 - Save (simulated)\nF7 - Exit');
                 }
                 
                 // F3 - Save (simulated)
@@ -653,7 +714,7 @@
                 // F7 - Exit
                 if (e.key === 'F7') {
                     e.preventDefault();
-                    if (confirm('Exit Flow Writer?')) {
+                    if (confirm('Exit WRITE OR DIE?')) {
                         window.close();
                     }
                 }
